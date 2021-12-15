@@ -7,6 +7,8 @@ import React from 'react';
 import theme, { createEmotionCache } from '@/themes';
 import { Layout } from '@/components';
 import { AppPageType } from '@/types/system';
+import { wrapper } from '@/store';
+import { RootModal } from '@/components';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -15,7 +17,7 @@ interface IBingoAppProps extends AppProps {
   Component: AppPageType;
 }
 
-function BingoApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: IBingoAppProps) {
+function BingoApp({ Component, emotionCache = clientSideEmotionCache, ...pageProps }: IBingoAppProps) {
   const page = React.useMemo(() => {
     const PageLayout = Component.Layout || Layout;
     return (
@@ -33,9 +35,10 @@ function BingoApp({ Component, emotionCache = clientSideEmotionCache, pageProps 
       <ThemeProvider theme={theme(1)}>
         <CssBaseline />
         {page}
+        <RootModal />
       </ThemeProvider>
     </CacheProvider>
   );
 }
 
-export default BingoApp;
+export default wrapper.withRedux(BingoApp);

@@ -1,20 +1,24 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function About() {
+import { selectCurrentTab, selectListTabs } from '@/store/tab/selector';
+import { tabActions } from '@/store/tab';
+import { Box } from '@mui/system';
+import { modalActions } from '@/store/modal';
+import { IModalReducer, ModalOptions } from '@/store/modal/types';
+
+export default function Index() {
+  const dispatch = useDispatch();
+
+  const showModal = () => {
+    const config: ModalOptions = {};
+    dispatch(modalActions.open(config));
+  };
+
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js v5-beta with TypeScript example
-        </Typography>
-        <Button variant="contained" color="primary">
-          test
-        </Button>
-      </Box>
-    </Container>
+    <Box>
+      <Button onClick={showModal} variant='contained' color='secondary'>Show Modal</Button>
+    </Box>
   );
 }

@@ -14,7 +14,8 @@ const components: Components = {
   MuiButton: {
     styleOverrides: {
       root: {
-        borderRadius: 50,
+        borderRadius: 5,
+        textTransform: 'capitalize',
       },
     },
   },
@@ -46,7 +47,7 @@ const components: Components = {
 };
 
 // Create a theme instance.
-const theme = (type: number = 1): IbingoTheme => {
+const theme = (type: number = 0): IbingoTheme => {
   const options: IBingoThemeOptions = {
     drawerWidth: 240,
     components,
