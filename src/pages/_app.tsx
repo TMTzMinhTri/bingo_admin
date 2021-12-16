@@ -7,8 +7,10 @@ import React from 'react';
 import theme, { createEmotionCache } from '@/themes';
 import { Layout } from '@/components';
 import { AppPageType } from '@/types/system';
-import { wrapper } from '@/store';
+import { AppState, wrapper } from '@/store';
 import { RootModal } from '@/components';
+import { useSelector } from 'react-redux';
+import { selectGlobalState } from '@/store/global/selectors';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -18,6 +20,7 @@ interface IBingoAppProps extends AppProps {
 }
 
 function BingoApp({ Component, emotionCache = clientSideEmotionCache, ...pageProps }: IBingoAppProps) {
+  const themeMode = useSelector(selectGlobalState)
   const page = React.useMemo(() => {
     const PageLayout = Component.Layout || Layout;
     return (
@@ -32,7 +35,7 @@ function BingoApp({ Component, emotionCache = clientSideEmotionCache, ...pagePro
         <title>My page</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <ThemeProvider theme={theme(1)}>
+      <ThemeProvider theme={theme(themeMode? 1 : 0)}>
         <CssBaseline />
         {page}
         <RootModal />
