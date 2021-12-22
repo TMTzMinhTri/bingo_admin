@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { AppBar, Avatar, IconButton, Menu, Toolbar, Box, lighten, MenuItem, ListItemIcon, Stack } from '@mui/material';
+import { AppBar, Avatar, IconButton, Menu, Toolbar, Box, lighten, MenuItem, ListItemIcon, Stack, Button } from '@mui/material';
 import { Menu as MenuIcon, Logout as LogoutIcon, AccountCircle as AccountIcon } from '@mui/icons-material';
 import styles from './styles';
+import { useDispatch } from 'react-redux';
+import { changeTheme } from '@/store/global';
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -33,6 +35,13 @@ const Header: React.FC = () => {
   const handleClose = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(null);
   };
+
+  const dispatch = useDispatch()
+
+  const handleChangeTheme = (() => {
+    dispatch(changeTheme())
+  })
+  
   const avatarProps = {
     sx: {
       bgcolor: lighten(stringToColor(name), 0.5),
@@ -80,6 +89,9 @@ const Header: React.FC = () => {
           <IconButton sx={{ p: 0 }} onClick={handleClick}>
             <Avatar {...avatarProps} />
           </IconButton>
+          <Button sx={{background: 'orange'}} onClick={handleChangeTheme}> 
+            change theme  
+          </Button>
         </Stack>
       </Toolbar>
       {generateRightContent}
