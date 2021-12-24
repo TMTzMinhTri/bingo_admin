@@ -1,14 +1,7 @@
-import createCache from '@emotion/cache';
-import { deepmerge } from '@mui/utils';
-
 import light from './light';
 import dark from './dark';
-import { Components, createTheme, Theme } from '@mui/material';
-
-export function createEmotionCache() {
-  return createCache({ key: 'css' });
-}
-const typeTheme = [light, dark];
+import { Components, PaletteMode } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 const components: Components = {
   MuiButton: {
@@ -19,13 +12,17 @@ const components: Components = {
       },
     },
   },
-  // MuiPaper: {
-  //   styleOverrides: {
-  //     root: {
-  //       padding: 24,
-  //     },
-  //   },
-  // },
+  MuiTabs: {
+    styleOverrides: {
+      root: {
+        backgroundColor: grey[300],
+        paddingBlock: 1
+      },
+      indicator: {
+        backgroundColor: 'transparent',
+      },
+    },
+  },
   MuiInputLabel: {
     styleOverrides: {
       root: {
@@ -46,16 +43,15 @@ const components: Components = {
   },
 };
 
-// Create a theme instance.
-const theme = (type: number = 0): IbingoTheme => {
-  const options: IBingoThemeOptions = {
-    drawerWidth: 240,
-    components,
-    shape: {
-      borderRadius: 12,
-    },
-  };
-  return createTheme(deepmerge<IBingoThemeOptions>(typeTheme[type], options));
-};
+const GetDesignTokens = (mode: PaletteMode) => ({
+  palette: {
+    mode,
+  },
+  ...(mode === 'light' ? light : dark),
+  components,
+  shape: {
+    borderRadius: 12,
+  },
+});
 
-export default theme;
+export default GetDesignTokens;

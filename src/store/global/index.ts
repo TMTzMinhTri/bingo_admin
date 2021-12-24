@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { IGlobalReducer } from './types';
 
 const initialState: IGlobalReducer = {
-  themeMode: true,
+  themeMode: false,
 };
 
 const globalSlice = createSlice({
@@ -12,11 +12,11 @@ const globalSlice = createSlice({
     changeTheme: (state) => {
       return {
         ...state,
-        themeMode: !state.themeMode
-      }
-    }
+        themeMode: !state.themeMode,
+      };
+    },
   },
 });
 
-export const {changeTheme} = globalSlice.actions
+export const { changeTheme } = globalSlice.actions;
 export default globalSlice;

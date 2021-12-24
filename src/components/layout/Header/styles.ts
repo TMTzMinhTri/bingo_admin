@@ -1,10 +1,10 @@
-import { SxProps } from '@mui/system';
+import { SxProps, Theme } from '@mui/system';
 
 enum headerStyle {
   userMenuPaper = 'userMenuPaper',
 }
 
-const styles: Record<headerStyle, SxProps<IbingoTheme>> = {
+const styles: Record<headerStyle, SxProps<Theme>> = {
   userMenuPaper: {
     overflow: 'visible',
     filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',

@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { CircularProgress, alpha } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-const LoadingContainer = styled('div')(({ theme }: { theme: IbingoTheme }) => ({
+const LoadingContainer = styled('div')(({ theme }) => ({
   position: 'absolute',
   width: '100%',
   height: '100%',
