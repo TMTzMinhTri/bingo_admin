@@ -1,4 +1,4 @@
-import { DialogTitle, IconButton } from '@mui/material';
+import { DialogTitle, IconButton, Theme } from '@mui/material';
 import * as React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { SxProps } from '@mui/system';
@@ -8,7 +8,7 @@ interface IModalHeaderProps {
   onClose?: () => void;
 }
 
-const styles: Record<string, SxProps<IbingoTheme>> = {
+const styles: Record<string, SxProps<Theme>> = {
   header: {
     margin: 0,
     paddingInline: 3,

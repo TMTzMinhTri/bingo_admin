@@ -4,13 +4,17 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import React from 'react';
-import theme, { createEmotionCache } from '@/themes';
-import { Layout } from '@/components';
+import GetDesignTokens from '@/themes';
+import { Layout, Notification } from '@/components';
 import { AppPageType } from '@/types/system';
 import { AppState, wrapper } from '@/store';
-import { RootModal } from '@/components';
 import { useSelector } from 'react-redux';
+import { createTheme } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
+
+import { RootModal } from '@/components';
 import { selectGlobalState } from '@/store/global/selectors';
+import createEmotionCache from '@/libs/createEmotionCache';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -20,7 +24,7 @@ interface IBingoAppProps extends AppProps {
 }
 
 function BingoApp({ Component, emotionCache = clientSideEmotionCache, ...pageProps }: IBingoAppProps) {
-  const themeMode = useSelector(selectGlobalState)
+  const themeMode = useSelector(selectGlobalState);
   const page = React.useMemo(() => {
     const PageLayout = Component.Layout || Layout;
     return (
@@ -29,16 +33,21 @@ function BingoApp({ Component, emotionCache = clientSideEmotionCache, ...pagePro
       </PageLayout>
     );
   }, []);
+
+  const theme = React.useMemo(() => createTheme(GetDesignTokens(themeMode ? 'light' : 'dark')), [themeMode]);
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
         <title>My page</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <ThemeProvider theme={theme(themeMode? 1 : 0)}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
-        {page}
-        <RootModal />
+        <SnackbarProvider>
+          <Notification>{page}</Notification>
+          <RootModal />
+        </SnackbarProvider>
       </ThemeProvider>
     </CacheProvider>
   );

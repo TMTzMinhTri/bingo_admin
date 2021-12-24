@@ -3,8 +3,12 @@ export interface ITabReducer {
   currentTab: string;
 }
 
+export type TabTypeComponent = 'home' | 'userManager' | 'userDetail';
+
+export type TabTypeIcon = 'home' | 'user';
 export interface ITab {
   tabId: string;
   title: string;
-  icon: 'home' | 'user';
+  icon: TabTypeIcon;
+  tabType: TabTypeComponent;
 }
