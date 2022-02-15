@@ -33,7 +33,7 @@ const TabTitle: React.FC<ITabTitle> = ({ item }) => {
       default:
         break;
     }
-  }, []);
+  }, [item.icon]);
   return (
     <Box sx={styles.tabTitleContainer}>
       <Box sx={styles.tabTitleIcon}>{renderIcon}</Box>

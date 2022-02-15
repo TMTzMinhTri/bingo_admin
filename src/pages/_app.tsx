@@ -7,7 +7,7 @@ import React from 'react';
 import GetDesignTokens from '@/themes';
 import { Layout, Notification } from '@/components';
 import { AppPageType } from '@/types/system';
-import { AppState, wrapper } from '@/store';
+import { wrapper } from '@/store';
 import { useSelector } from 'react-redux';
 import { createTheme } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
@@ -15,6 +15,7 @@ import { SnackbarProvider } from 'notistack';
 import { RootModal } from '@/components';
 import { selectGlobalState } from '@/store/global/selectors';
 import createEmotionCache from '@/libs/createEmotionCache';
+import { ChatProvider } from '@/Providers';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -25,6 +26,7 @@ interface IBingoAppProps extends AppProps {
 
 function BingoApp({ Component, emotionCache = clientSideEmotionCache, ...pageProps }: IBingoAppProps) {
   const themeMode = useSelector(selectGlobalState);
+
   const page = React.useMemo(() => {
     const PageLayout = Component.Layout || Layout;
     return (
@@ -32,7 +34,7 @@ function BingoApp({ Component, emotionCache = clientSideEmotionCache, ...pagePro
         <Component {...pageProps} />
       </PageLayout>
     );
-  }, []);
+  }, [Component, pageProps]);
 
   const theme = React.useMemo(() => createTheme(GetDesignTokens(themeMode ? 'light' : 'dark')), [themeMode]);
 
@@ -45,8 +47,10 @@ function BingoApp({ Component, emotionCache = clientSideEmotionCache, ...pagePro
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <SnackbarProvider>
-          <Notification>{page}</Notification>
-          <RootModal />
+          <ChatProvider>
+            <Notification>{page}</Notification>
+            <RootModal />
+          </ChatProvider>
         </SnackbarProvider>
       </ThemeProvider>
     </CacheProvider>
